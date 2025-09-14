@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Maison Éclat — Luxury Clothing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f0f10; /* deep charcoal */
+      --card:#111213;
+      --muted:#bdb6b0;
+      --accent:#c6a86a; /* warm gold */
+      --accent-2:#7fb77e; /* emerald hint */
+      --ivory:#f7f4ef;
+      --glass: rgba(255,255,255,0.04);
+      --shadow: 0 6px 18px rgba(3,3,3,0.6);
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: linear-gradient(180deg,var(--bg) 0%, #070707 100%);
+      color:var(--ivory);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+      padding-bottom:80px;
+    }
+
+    /* Container */
+    .container{max-width:1200px;margin:36px auto;padding:0 20px}
+
+    /* Header */
+    header{display:flex;align-items:center;gap:18px;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display';font-weight:700;color:#111}
+    .brand h1{margin:0;font-family:'Playfair Display';font-size:20px;letter-spacing:0.6px}
+    .nav{display:flex;gap:16px;align-items:center}
+    .nav a{color:var(--muted);text-decoration:none;font-weight:600}
+
+    /* Search / utilities */
+    .search{flex:1;margin:0 24px;display:flex;align-items:center;background:var(--glass);padding:10px 12px;border-radius:12px;backdrop-filter: blur(4px)}
+    .search input{flex:1;background:transparent;border:0;color:var(--ivory);outline:none;font-size:14px}
+    .icon-btn{background:transparent;border:0;color:var(--muted);cursor:pointer;font-weight:600}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;margin-top:26px;align-items:center}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:34px;border-radius:18px;box-shadow:var(--shadow)}
+    .hero h2{font-family:'Playfair Display';font-size:38px;margin:0 0 12px;color:var(--ivory)}
+    .hero p{color:var(--muted);margin:0 0 18px}
+    .cta{display:inline-block;padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,var(--accent),#b99754);color:#111;font-weight:700;text-decoration:none}
+    .hero-aside{display:flex;flex-direction:column;gap:12px}
+    .promo{background:var(--card);padding:12px;border-radius:12px}
+
+    /* Filters & grid */
+    .toolbar{display:flex;justify-content:space-between;align-items:center;margin:22px 0}
+    .filters{display:flex;gap:10px;align-items:center}
+    .btn{padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted);cursor:pointer}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;overflow:hidden;box-shadow:var(--shadow);transition:transform .28s ease, box-shadow .28s}
+    .card:hover{transform:translateY(-6px)}
+    .card img{width:100%;height:320px;object-fit:cover;display:block}
+    .card-body{padding:14px}
+    .meta{display:flex;justify-content:space-between;align-items:center}
+    .price{font-weight:700;color:var(--accent)}
+    .tag{font-size:12px;color:var(--muted);padding:6px 8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
+
+    /* Cart drawer (simple) */
+    .cart-drawer{position:fixed;right:20px;bottom:20px;width:380px;background:linear-gradient(180deg,#0b0b0c,#0a0a0b);border-radius:14px;padding:16px;box-shadow:0 18px 50px rgba(0,0,0,0.7)}
+    .cart-drawer h3{margin:0 0 8px}
+    .cart-row{display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.02)}
+    .cart-row img{width:56px;height:56px;object-fit:cover;border-radius:8px}
+    .qty{display:flex;align-items:center;gap:8px}
+    .checkout{display:block;margin-top:12px;padding:12px 14px;border-radius:12px;background:linear-gradient(90deg,var(--accent-2),var(--accent));color:#07110a;font-weight:700;text-align:center;text-decoration:none}
+
+    /* Footer */
+    footer{margin-top:48px;padding:28px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+    .footer-grid{display:flex;justify-content:space-between;gap:24px}
+    .legal{color:var(--muted);font-size:13px}
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr;}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .cart-drawer{width:320px}
+    }
+    @media (max-width:640px){
+      .grid{grid-template-columns:1fr}
+      header{gap:10px}
+      .search{display:none}
+      .nav{display:none}
+      .container{padding:0 14px}
+      .cart-drawer{right:10px;left:10px;width:auto}
+    }
+
+    /* tiny accessibility focus states */
+    a:focus,button:focus,input:focus{outline:3px solid rgba(198,168,106,0.18);outline-offset:2px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">MÉ</div>
+        <div>
+          <h1>Maison Éclat</h1>
+          <div style="font-size:12px;color:var(--muted)">Modern luxury — curated wardrobe</div>
+        </div>
+      </div>
+
+      <div class="search" role="search" aria-label="Search products">
+        <input placeholder="Search jackets, dresses, limited drops..." aria-label="Search products" />
+        <button class="icon-btn" aria-label="search">🔍</button>
+      </div>
+
+      <nav class="nav" aria-label="main">
+        <a href="#">New</a>
+        <a href="#">Women</a>
+        <a href="#">Men</a>
+        <a href="#">Collections</a>
+        <button class="btn" id="openCartBtn">Cart (2)</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-card">
+          <h2>Timeless pieces. Responsible sourcing.</h2>
+          <p>Discover our Fall Atelier — minimal silhouettes, premium fabric, and handcrafted details. Free worldwide shipping on orders over $300.</p>
+          <a class="cta" href="#products">Shop the Collection</a>
+
+          <div style="display:flex;gap:12px;margin-top:18px;align-items:center">
+            <div class="tag">Limited Edition</div>
+            <div class="tag">Artisan Stitch</div>
+            <div class="tag">30-day returns</div>
+          </div>
+        </div>
+
+        <aside class="hero-aside">
+          <div class="promo"> 
+            <strong style="display:block">Featured: The Ember Coat</strong>
+            <small style="display:block;color:var(--muted)">A sculptural overcoat in boiled wool — 120 pieces only.</small>
+            <div style="margin-top:10px;font-weight:700;color:var(--accent)">$980</div>
+          </div>
+
+          <div class="promo"> 
+            <strong style="display:block">Gift Box Service</strong>
+            <small style="display:block;color:var(--muted)">Add premium wrapping & handwritten note at checkout.</small>
+          </div>
+        </aside>
+      </section>
+
+      <section id="products">
+        <div class="toolbar">
+          <div class="filters" role="region" aria-label="filters">
+            <button class="btn">All</button>
+            <button class="btn">Coats</button>
+            <button class="btn">Dresses</button>
+            <button class="btn">Accessories</button>
+          </div>
+          <div style="color:var(--muted)">Showing <strong>12</strong> items</div>
+        </div>
+
+        <div class="grid" aria-live="polite">
+          <!-- Product card - repeatable -->
+          <article class="card" tabindex="0">
+            <img src="https://picsum.photos/id/1005/800/600" alt="Wool overcoat on mannequin">
+            <div class="card-body">
+              <div style="display:flex;justify-content:space-between;align-items:start">
+                <div>
+                  <h3 style="margin:0;font-size:16px">Ember Sculpt Coat</h3>
+                  <div style="font-size:13px;color:var(--muted)">Boiled wool · Charcoal</div>
+                </div>
+                <div style="text-align:right">
+                  <div class="price">$980</div>
+                  <div style="font-size:12px;color:var(--muted)">Limited</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:12px;align-items:center;justify-content:space-between">
+                <button class="btn" onclick="openQuick(1)">Quick view</button>
+                <button class="btn" onclick="addToCart({id:1,name:'Ember Sculpt Coat',price:980, image:'https://picsum.photos/id/1005/800/600'})">Add to cart</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card" tabindex="0">
+            <img src="https://picsum.photos/id/1011/800/600" alt="Minimal silk dress on rack">
+            <div class="card-body">
+              <div class="meta">
+                <div>
+                  <h3 style="margin:0;font-size:16px">Nocturne Silk Dress</h3>
+                  <div style="font-size:13px;color:var(--muted)">Silk satin · Noir</div>
+                </div>
+                <div>
+                  <div class="price">$420</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:12px;justify-content:space-between">
+                <button class="btn" onclick="openQuick(2)">Quick view</button>
+                <button class="btn" onclick="addToCart({id:2,name:'Nocturne Silk Dress',price:420, image:'https://picsum.photos/id/1011/800/600'})">Add to cart</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card" tabindex="0">
+            <img src="https://picsum.photos/id/1025/800/600" alt="Tailored blazer on hanger">
+            <div class="card-body">
+              <div class="meta">
+                <div>
+                  <h3 style="margin:0;font-size:16px">Marais Tailored Blazer</h3>
+                  <div style="font-size:13px;color:var(--muted)">Wool blend · Midnight</div>
+                </div>
+                <div>
+                  <div class="price">$520</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:12px;justify-content:space-between">
+                <button class="btn" onclick="openQuick(3)">Quick view</button>
+                <button class="btn" onclick="addToCart({id:3,name:'Marais Tailored Blazer',price:520, image:'https://picsum.photos/id/1025/800/600'})">Add to cart</button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Add more cards as needed... duplicated for demo -->
+          <article class="card" tabindex="0">
+            <img src="https://picsum.photos/id/1027/800/600" alt="Cashmere scarf folded">
+            <div class="card-body">
+              <div class="meta">
+                <div>
+                  <h3 style="margin:0;font-size:16px">Aurelia Cashmere Scarf</h3>
+                  <div style="font-size:13px;color:var(--muted)">100% Cashmere · Cream</div>
+                </div>
+                <div>
+                  <div class="price">$160</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:12px;justify-content:space-between">
+                <button class="btn" onclick="openQuick(4)">Quick view</button>
+                <button class="btn" onclick="addToCart({id:4,name:'Aurelia Cashmere Scarf',price:160, image:'https://picsum.photos/id/1027/800/600'})">Add to cart</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card" tabindex="0">
+            <img src="https://picsum.photos/id/1035/800/600" alt="Minimal leather bag on shelf">
+            <div class="card-body">
+              <div class="meta">
+                <div>
+                  <h3 style="margin:0;font-size:16px">Sable Leather Tote</h3>
+                  <div style="font-size:13px;color:var(--muted)">Vegetable-tanned · Sable</div>
+                </div>
+                <div>
+                  <div class="price">$740</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:12px;justify-content:space-between">
+                <button class="btn" onclick="openQuick(5)">Quick view</button>
+                <button class="btn" onclick="addToCart({id:5,name:'Sable Leather Tote',price:740, image:'https://picsum.photos/id/1035/800/600'})">Add to cart</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card" tabindex="0">
+            <img src="https://picsum.photos/id/1041/800/600" alt="Fine knit sweater folded">
+            <div class="card-body">
+              <div class="meta">
+                <div>
+                  <h3 style="margin:0;font-size:16px">Montreal Fine Knit</h3>
+                  <div style="font-size:13px;color:var(--muted)">Merino silk blend</div>
+                </div>
+                <div>
+                  <div class="price">$260</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:12px;justify-content:space-between">
+                <button class="btn" onclick="openQuick(6)">Quick view</button>
+                <button class="btn" onclick="addToCart({id:6,name:'Montreal Fine Knit',price:260, image:'https://picsum.photos/id/1041/800/600'})">Add to cart</button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+      </section>
+
+      <footer>
+        <div class="footer-grid">
+          <div>
+            <strong>Maison Éclat</strong>
+            <div class="legal" style="margin-top:8px">Handcrafted clothing · Sustainable partners · Customer care 24/7</div>
+          </div>
+          <div>
+            <div style="font-weight:700">Support</div>
+            <div style="color:var(--muted);margin-top:8px">Shipping · Returns · FAQ · Contact</div>
+          </div>
+          <div>
+            <div style="font-weight:700">Follow</div>
+            <div style="color:var(--muted);margin-top:8px">Instagram · Pinterest · Twitter</div>
+          </div>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Simple cart drawer (demo) -->
+  <aside class="cart-drawer" id="cart" aria-label="Shopping cart" style="display:none">
+    <h3>Your cart</h3>
+    <div id="cartItems">
+      <!-- JS populated -->
+    </div>
+    <a class="checkout" href="#">Proceed to checkout</a>
+  </aside>
+
+  <!-- Quick view modal (very small demo) -->
+  <div id="quickView" role="dialog" aria-modal="true" style="display:none;position:fixed;inset:0;align-items:center;justify-content:center;backdrop-filter: blur(3px);">
+    <div style="max-width:760px;margin:auto;background:var(--card);padding:18px;border-radius:14px;box-shadow:var(--shadow);">
+      <div style="display:flex;gap:12px">
+        <img id="qimg" src="" alt="" style="width:48%;height:320px;object-fit:cover;border-radius:8px" />
+        <div style="flex:1">
+          <h3 id="qtitle"></h3>
+          <div id="qdesc" style="color:var(--muted)"></div>
+          <div id="qprice" style="margin-top:14px;font-weight:700;color:var(--accent)"></div>
+          <div style="margin-top:16px"><button class="cta" onclick="addToCart(currentQuick)">Add to cart</button></div>
+        </div>
+      </div>
+      <div style="text-align:right;margin-top:8px"><button class="btn" onclick="closeQuick()">Close</button></div>
+    </div>
+  </div>
+
+  <script>
+    // Demo JS to power cart + quick view
+    let cart = [];
+    const cartEl = document.getElementById('cart');
+    const cartItems = document.getElementById('cartItems');
+    const openCartBtn = document.getElementById('openCartBtn');
+    let currentQuick = null;
+
+    function renderCart(){
+      if(cart.length===0){
+        cartItems.innerHTML = '<div style="color:var(--muted)">Your cart is empty.</div>';
+      } else {
+        cartItems.innerHTML = '';
+        cart.forEach(item=>{
+          const row = document.createElement('div');
+          row.className='cart-row';
+          row.innerHTML = `<img src="${item.image}" alt="${item.name}" />
+            <div style="flex:1">
+              <div style="font-weight:700">${item.name}</div>
+              <div style="color:var(--muted);font-size:13px">Qty: ${item.qty}</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-weight:700;color:var(--accent)">$${(item.price*item.qty).toFixed(2)}</div>
+            </div>`;
+          cartItems.appendChild(row);
+        })
+      }
+    }
+
+    function addToCart(product){
+      // product can be object or id
+      let p = product;
+      if(typeof product === 'number') return; // not used here
+      // check existing
+      let found = cart.find(c=>c.id===p.id);
+      if(found){found.qty += 1;} else {cart.push({...p,qty:1});}
+      cartEl.style.display='block';
+      renderCart();
+    }
+
+    openCartBtn.addEventListener('click', ()=>{cartEl.style.display = cartEl.style.display==='none' ? 'block' : 'none'; renderCart();});
+
+    // Quick view demo
+    const quick = document.getElementById('quickView');
+    function openQuick(id){
+      const products = {
+        1:{id:1,name:'Ember Sculpt Coat',price:980,image:'https://picsum.photos/id/1005/800/600',desc:'A sculptural overcoat crafted in boiled wool.'},
+        2:{id:2,name:'Nocturne Silk Dress',price:420,image:'https://picsum.photos/id/1011/800/600',desc:'Bias-cut silk dress with a soft drape.'},
+        3:{id:3,name:'Marais Tailored Blazer',price:520,image:'https://picsum.photos/id/1025/800/600',desc:'Single-breasted blazer with structured shoulders.'},
+        4:{id:4,name:'Aurelia Cashmere Scarf',price:160,image:'https://picsum.photos/id/1027/800/600',desc:'Lightweight cashmere for year-round wear.'},
+        5:{id:5,name:'Sable Leather Tote',price:740,image:'https://picsum.photos/id/1035/800/600',desc:'Hand-stitched tote with reinforced handles.'},
+        6:{id:6,name:'Montreal Fine Knit',price:260,image:'https://picsum.photos/id/1041/800/600',desc:'Merino-silk blend, soft finish.'}
+      };
+      const p = products[id];
+      document.getElementById('qimg').src = p.image;
+      document.getElementById('qtitle').textContent = p.name;
+      document.getElementById('qdesc').textContent = p.desc;
+      document.getElementById('qprice').textContent = '$' + p.price;
+      currentQuick = p;
+      quick.style.display = 'flex';
+    }
+    function closeQuick(){ quick.style.display='none'; }
+
+    // close quick when clicking outside
+    window.addEventListener('click', (e)=>{ if(e.target===quick) closeQuick(); });
+
+    // initial render (demo) with 0 items
+    renderCart();
+  </script>
+</body>
+</html>
